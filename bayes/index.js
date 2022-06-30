@@ -11,10 +11,10 @@ const input = {
   TekananUdara: 1013.43,
 };
 
-const main = async () => {
+const bayes = async () => {
   const csvData = [];
   await new Promise((resolve, reject) => {
-    fs.createReadStream('test.csv')
+    fs.createReadStream('/bayes/test.csv')
       .pipe(csv())
       .on('data', (data) => csvData.push(data))
       .on('end', () => resolve(csvData))
@@ -55,7 +55,57 @@ const main = async () => {
   };
   result.likelihood = getLikelihood(probabilty);
   result.likelihoodNormal = getLikelihoodNormal(result.likelihood);
-  console.log(result);
+  console.log(result.likelihoodNormal);
+};
+
+const generateJson = async () => {
+  const csvData = [];
+  await new Promise((resolve, reject) => {
+    fs.createReadStream('./test.csv')
+      .pipe(csv())
+      .on('data', (data) => csvData.push(data))
+      .on('end', () => resolve(csvData))
+      .on('error', (err) => reject(err));
+  });
+
+  const dataResult = {
+    Temperature: {},
+    JarakPandang: {},
+    Kelembaban: {},
+    KecepatanAngin: {},
+    DerajatAngin: {},
+    TekananUdara: {},
+  };
+
+  const probabilty = {
+    Temperature: {},
+    JarakPandang: {},
+    Kelembaban: {},
+    KecepatanAngin: {},
+    DerajatAngin: {},
+    TekananUdara: {},
+    CurahHujan: {},
+  };
+
+  Object.keys(dataResult).forEach((key) => {
+    dataResult[key] = clusteringGroup(csvData, key);
+  });
+  console.log(dataResult);
+  let data = JSON.stringify(dataResult);
+  fs.writeFileSync('../react/src/components/dataResult.json', data);
+
+  // Object.keys(dataResult).forEach((key) => {
+  //   probabilty[key] = getNormalDistribution(dataResult[key], input[key]);
+  // });
+  // probabilty.CurahHujan = getProbabilty(dataResult.Temperature);
+
+  // const result = {
+  //   likelihood: {},
+  //   likelihoodNormal: {},
+  // };
+  // result.likelihood = getLikelihood(probabilty);
+  // result.likelihoodNormal = getLikelihoodNormal(result.likelihood);
+  // console.log(result.likelihoodNormal);
 };
 
 const getLikelihoodNormal = (data) => {
@@ -165,4 +215,4 @@ const clusteringGroup = (data, className) => {
   return curahHujan;
 };
 
-main().catch(console.error);
+generateJson();
