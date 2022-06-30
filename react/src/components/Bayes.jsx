@@ -14,7 +14,7 @@ export const Bayes = (input) => {
 
   useEffect(() => {
     if (input) {
-      setResult(resolveBayes(dataResult, input));
+      setResult(resolveBayes(dataResult, input.input));
     }
   }, [input]);
 
@@ -22,8 +22,8 @@ export const Bayes = (input) => {
     console.log(result);
   }, [result]);
   return (
-    <div>
-      <h1>Bayes</h1>
+    <div className="w-3/5 h-max bg-white rounded-xl  shadow-sm">
+      <div className="result">test</div>
     </div>
   );
 };
@@ -46,8 +46,10 @@ const resolveBayes = (dataResult, input) => {
     likelihood: {},
     likelihoodNormal: {},
   };
+
   result.likelihood = getLikelihood(probabilty);
   result.likelihoodNormal = getLikelihoodNormal(result.likelihood);
+
   return result.likelihoodNormal;
 };
 
