@@ -10,9 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "csv-parser": "^3.0.0",
-    "gaussian": "^1.2.0",
-    "mathjs": "^10.6.4",
-    "normal-distribution": "^1.1.1"
+    "mathjs": "^10.6.4"
   },
   "devDependencies": {
     "@types/node": "^18.0.0"
