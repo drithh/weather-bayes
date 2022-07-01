@@ -108,7 +108,15 @@ export const Input = ({ handleForm }) => {
             }}
           />
         </div>
-        <div className="input-wrapper flex flex-col place-items-end gap-y-2 px-6 col-span-3">
+        <div className="input-wrapper flex w-full place-content-between place-items-center gap-y-2 px-6 col-span-3 text-purple-900 hover:underline">
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1U38HP_Ra_scQgysRumFlfZJ4DGb3y5Ok87qhCsMoU-0/edit?usp=sharing"
+            rel="noopener noreferrer"
+          >
+            Dataset Test
+          </a>
+
           <button
             type="reset"
             className="px-8 py-2 border-2 mt-6 border-gray-100 rounded-lg outline-none shadow text-purple-900 hover:bg-purple-700 hover:text-white transition-all font-bold"
