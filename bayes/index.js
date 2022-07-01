@@ -3,18 +3,18 @@ const fs = require('fs');
 const math = require('mathjs');
 
 const input = {
-  Temperature: 20.02222222,
-  JarakPandang: 11.27,
-  Kelembaban: 0.54,
-  KecepatanAngin: 24.6652,
-  DerajatAngin: 359,
-  TekananUdara: 1013.43,
+  Temperature: 16.15555556,
+  JarakPandang: 9.982,
+  Kelembaban: 0.79,
+  KecepatanAngin: 7.889,
+  DerajatAngin: 342,
+  TekananUdara: 1014.4,
 };
 
 const bayes = async () => {
   const csvData = [];
   await new Promise((resolve, reject) => {
-    fs.createReadStream('/bayes/test.csv')
+    fs.createReadStream('./test.csv')
       .pipe(csv())
       .on('data', (data) => csvData.push(data))
       .on('end', () => resolve(csvData))
@@ -215,4 +215,4 @@ const clusteringGroup = (data, className) => {
   return curahHujan;
 };
 
-generateJson();
+bayes();

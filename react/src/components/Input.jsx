@@ -10,14 +10,15 @@ export const Input = ({ handleForm }) => {
     CurahHujan: '',
   });
   return (
-    <div className="w-3/5 h-max bg-white rounded-xl  shadow-sm">
-      <div className="title py-4 text-4xl text-purple-900 my-6 font-extrabold">
-        Masukkan Data Yand Diperlukan
+    <div className="max-w-6xl w-full h-max bg-white rounded-xl  shadow-md">
+      <div className="title py-4 text-4xl text-purple-900 my-6 font-bold font-lato">
+        Masukkan Data Yang Diperlukan
       </div>
       <div className="grid grid-cols-3 p-8 gap-4">
         <div className="input-wrapper flex flex-col place-content-start gap-y-2 px-6">
           <label className="pl-2 font-bold text-purple-900 text-left text-xl">
             Temperature
+            <span className="text-gray-400 text-base font-medium"> °C</span>
           </label>
           <input
             type="number"
@@ -32,6 +33,7 @@ export const Input = ({ handleForm }) => {
         <div className="input-wrapper flex flex-col place-content-start gap-y-2 px-6">
           <label className="pl-2 font-bold text-purple-900 text-left text-xl">
             Jarak Pandang
+            <span className="text-gray-400 text-base font-medium"> km</span>
           </label>
           <input
             type="number"
@@ -46,6 +48,7 @@ export const Input = ({ handleForm }) => {
         <div className="input-wrapper flex flex-col place-content-start gap-y-2 px-6">
           <label className="pl-2 font-bold text-purple-900 text-left text-xl">
             Kelembaban
+            <span className="text-gray-400 text-base font-medium"> 0-1</span>
           </label>
           <input
             type="number"
@@ -60,6 +63,7 @@ export const Input = ({ handleForm }) => {
         <div className="input-wrapper flex flex-col place-content-start gap-y-2 px-6">
           <label className="pl-2 font-bold text-purple-900 text-left text-xl">
             Kecepatan Angin
+            <span className="text-gray-400 text-base font-medium"> km/jam</span>
           </label>
           <input
             type="number"
@@ -74,6 +78,7 @@ export const Input = ({ handleForm }) => {
         <div className="input-wrapper flex flex-col place-content-start gap-y-2 px-6">
           <label className="pl-2 font-bold text-purple-900 text-left text-xl">
             Derajat Angin
+            <span className="text-gray-400 text-base font-medium"> °</span>
           </label>
           <input
             type="number"
@@ -88,6 +93,10 @@ export const Input = ({ handleForm }) => {
         <div className="input-wrapper flex flex-col place-content-start gap-y-2 px-6">
           <label className="pl-2 font-bold text-purple-900 text-left text-xl">
             Tekanan Udara
+            <span className="text-gray-400 text-base font-medium">
+              {' '}
+              milibar
+            </span>
           </label>
           <input
             type="number"
@@ -105,15 +114,15 @@ export const Input = ({ handleForm }) => {
             className="px-8 py-2 border-2 mt-6 border-gray-100 rounded-lg outline-none shadow text-purple-900 hover:bg-purple-700 hover:text-white transition-all font-bold"
             onClick={() => {
               handleForm(input);
-              setInput({
-                Temperature: '',
-                JarakPandang: '',
-                Kelembaban: '',
-                KecepatanAngin: '',
-                DerajatAngin: '',
-                TekananUdara: '',
-                CurahHujan: '',
-              });
+              // setInput({
+              //   Temperature: '',
+              //   JarakPandang: '',
+              //   Kelembaban: '',
+              //   KecepatanAngin: '',
+              //   DerajatAngin: '',
+              //   TekananUdara: '',
+              //   CurahHujan: '',
+              // });
             }}
           >
             Predict

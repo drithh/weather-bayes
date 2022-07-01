@@ -18,11 +18,11 @@ const App = () => {
   };
 
   return (
-    <div className="App bg-slate-50 min-h-screen font-sans">
+    <div className="App bg-slate-50 min-h-screen font-oxygen">
       <div className="title text-[5rem] font-extrabold font-title pt-20 pb-10 text-gray-800 uppercase tracking-widest">
         Tebak Cuaca
       </div>
-      <div className="input-wrapper flex flex-col place-items-center gap-y-8 h-screen overflow-hidden ">
+      <div className="input-wrapper flex flex-col place-items-center gap-y-8 min-h-screen overflow-hidden ">
         <Input handleForm={handleForm} />
         <Bayes input={data} />
         {/* {data.length > 0 && <Bayes input={data} />} */}

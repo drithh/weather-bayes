@@ -1,4 +1,8 @@
-// import dataResult.json
+import ProgressBar from '@ramonak/react-progress-bar';
+import {
+  AnimatedWeatherIcon,
+  AnimatedWeatherTimes,
+} from 'animated-weather-icon';
 import { useState, useEffect } from 'react';
 import dataResult from './dataResult.json';
 const math = require('mathjs');
@@ -12,20 +16,175 @@ export const Bayes = (input) => {
     partlyCloudy: 0,
   });
 
+  const [icon, setIcon] = useState('');
+
+  const [topOne, setTopOne] = useState('');
   useEffect(() => {
-    if (input) {
+    const renderTarget = document.querySelector('#icon');
+    if (!icon) {
+      setIcon(new AnimatedWeatherIcon(renderTarget));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (input.input.length !== 0) {
       setResult(resolveBayes(dataResult, input.input));
     }
   }, [input]);
 
   useEffect(() => {
-    console.log(result);
+    if (result.clear !== 0) {
+      if (failCheck(result)) {
+        console.log('wweirdd');
+        return;
+      }
+      const weatherText = [
+        'Cerah',
+        'Berkabut',
+        'Sebagian Besar Berawan',
+        'Mendung',
+        'Sedikit Berawan',
+      ];
+      const top = getTopOne(result);
+      setTopOne(weatherText[top]);
+
+      const weatherIcon = [
+        'Clear',
+        'Fog',
+        'Cloudy',
+        'Overcast',
+        'Broken Clouds',
+      ];
+      console.log(icon);
+      icon.setType(weatherIcon[top], AnimatedWeatherTimes.Day);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
   return (
-    <div className="w-3/5 h-max bg-white rounded-xl  shadow-sm">
-      <div className="result">test</div>
-    </div>
+    <>
+      <div
+        className={
+          'max-w-6xl w-full h-max bg-white rounded-xl  shadow-md p-14 mb-20 ' +
+          (topOne === '' ? 'hidden' : 'test')
+        }
+      >
+        {/* {topOne !== '' && ( */}
+        <div className="text-2xl font-bold text-purple-900 text-left font-lato">
+          Aku tebak Kondisi Cuaca Di tempat tersebut adalah
+          <span className="font-medium"> {topOne}</span> !
+        </div>
+        {/* )} */}
+
+        <div className="relative wrapper flex place-content-between place-items-center gap-x-8 h-min">
+          {/* {topOne !== '' && ( */}
+          <div className="precentage w-full">
+            <div className="text-2xl mt-4 font-medium text-purple-900 text-left">
+              Dengan Presentase:
+            </div>
+            <div className="progress-wrapepr pt-4 flex flex-col gap-y-2 place-content-center w-[34rem]">
+              <div className="flex place-content-between">
+                <div className="weather text-xl font-bold text-[#FFDE7D]">
+                  Cerah
+                </div>
+              </div>
+              <ProgressBar
+                // isLabelVisible={false}
+                customLabel={(result.clear * 100).toFixed(2) + '%'}
+                className="w-[34rem]"
+                completed={result.clear * 100 < 1 ? 0 : result.clear * 100}
+                bgColor="#FFDE7D"
+              />
+            </div>
+            <div className="progress-wrapepr pt-4 flex flex-col gap-y-2 place-content-center w-[34rem]">
+              <div className="flex place-content-between">
+                <div className="weather text-xl font-bold text-[#CADEFC]">
+                  Sedikit Berawan
+                </div>
+              </div>
+              <ProgressBar
+                // isLabelVisible={false}
+                customLabel={(result.partlyCloudy * 100).toFixed(2) + '%'}
+                className="w-[34rem]"
+                completed={
+                  result.partlyCloudy * 100 < 1 ? 0 : result.partlyCloudy * 100
+                }
+                bgColor="#CADEFC"
+              />
+            </div>
+            <div className="progress-wrapepr pt-4 flex flex-col gap-y-2 place-content-center w-[34rem]">
+              <div className="flex place-content-between">
+                <div className="weather text-xl font-bold text-[#A6B1E1]">
+                  Sebagian Besar Berawan
+                </div>
+              </div>
+              <ProgressBar
+                // isLabelVisible={false}
+                customLabel={(result.mostlyCloudy * 100).toFixed(2) + '%'}
+                className="w-[34rem]"
+                completed={
+                  result.mostlyCloudy * 100 < 1 ? 0 : result.mostlyCloudy * 100
+                }
+                bgColor="#A6B1E1"
+              />
+            </div>
+            <div className="progress-wrapepr pt-4 flex flex-col gap-y-2 place-content-center w-[34rem]">
+              <div className="flex place-content-between">
+                <div className="weather text-xl font-bold text-[#3D84A8]">
+                  Berkabut
+                </div>
+              </div>
+              <ProgressBar
+                // isLabelVisible={false}
+                customLabel={(result.foggy * 100).toFixed(2) + '%'}
+                className="w-[34rem]"
+                completed={result.foggy * 100 < 1 ? 0 : result.foggy * 100}
+                bgColor="#3D84A8"
+              />
+            </div>
+            <div className="progress-wrapepr pt-4 flex flex-col gap-y-2 place-content-center w-[34rem]">
+              <div className="flex place-content-between">
+                <div className="weather text-xl font-bold text-[#424874]">
+                  Mendung
+                </div>
+              </div>
+              <ProgressBar
+                // isLabelVisible={false}
+                customLabel={(result.overcast * 100).toFixed(2) + '%'}
+                className="w-[34rem]"
+                completed={
+                  result.overcast * 100 < 1 ? 0 : result.overcast * 100
+                }
+                bgColor="#424874"
+              />
+            </div>
+          </div>
+          {/* )} */}
+
+          <div className="icon w-2/5 absolute right-0 top-12" id="icon"></div>
+        </div>
+      </div>
+    </>
   );
+};
+
+const failCheck = (data) => {
+  // check if data key is not a number
+  const keys = Object.keys(data);
+  const check = keys.find((key) => {
+    return isNaN(data[key]);
+  });
+  if (check) {
+    return true;
+  }
+  return false;
+};
+
+const getTopOne = (data) => {
+  const max = Math.max(...Object.values(data));
+  const keys = Object.keys(data);
+  const index = keys.findIndex((key) => data[key] === max);
+  return index;
 };
 
 const resolveBayes = (dataResult, input) => {

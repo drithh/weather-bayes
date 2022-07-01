@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      sans: ['Oxygen', 'sans-serif'],
+      oxygen: ['Oxygen', 'sans-serif'],
+      lato: ['Lato', 'sans-serif'],
       title: ['Londrina Solid', 'cursive'],
     },
   },
